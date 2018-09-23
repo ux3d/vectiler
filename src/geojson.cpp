@@ -48,10 +48,9 @@ void GeoJson::extractFeature(const rapidjson::Value& _in, Feature& _out, const T
             continue;
         }
 
-        if (prop.IsNumber()) {
-            //_out.props.numericProps[member] = prop.GetDouble();
-        } else if (prop.IsString()) {
-            //_out.props.stringProps[member] = prop.GetString();
+        if (strcmp(member, "is_bridge") == 0) {
+            _out.props.booleanProps[member] = prop.GetBool();
+            continue;
         }
     }
 

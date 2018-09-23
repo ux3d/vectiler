@@ -936,6 +936,7 @@ int vectiler(Params exportParams) {
             if (data) {
                 const static std::string keyHeight("height");
                 const static std::string keyMinHeight("min_height");
+                const static std::string keyIsBridge("is_bridge");
 
                 for (auto layer : data->layers) {
                     if (textureData && layer.name == "water")
@@ -948,6 +949,7 @@ int vectiler(Params exportParams) {
                     for (auto feature : layer.features) {
                         auto itHeight = feature.props.numericProps.find(keyHeight);
                         auto itMinHeight = feature.props.numericProps.find(keyMinHeight);
+                        auto itIsBridge = feature.props.booleanProps.find(keyIsBridge);
                         float scale = tile.invScale * exportParams.buildingsExtrusionScale;
                         double height = 0.0;
                         double minHeight = 0.0;
@@ -967,6 +969,11 @@ int vectiler(Params exportParams) {
 
                         if (itMinHeight != feature.props.numericProps.end()) {
                             minHeight = itMinHeight->second * scale;
+                        }
+
+                        if (itIsBridge != feature.props.booleanProps.end())
+                        {
+                            // TODO: Process bridge data.
                         }
 
                         auto mesh = std::unique_ptr<PolygonMesh>(new PolygonMesh);

@@ -5,6 +5,7 @@
 
 struct Properties {
     std::map<std::string, double> numericProps;
+    std::map<std::string, bool> booleanProps;
 };
 
 enum GeometryType {
