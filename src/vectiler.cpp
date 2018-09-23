@@ -962,9 +962,9 @@ int vectiler(Params exportParams) {
                             height = itHeight->second * scale;
                         }
 
-                        if (layer.name != "water") {
+                        if (layer.name == "water") {
                             // TODO: Read from export parameters.
-                            height += 10.0 * tile.invScale;
+                            height -= 10.0 * tile.invScale;
                         }
 
                         if (itMinHeight != feature.props.numericProps.end()) {
