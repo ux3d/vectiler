@@ -938,8 +938,14 @@ int vectiler(Params exportParams) {
                 const static std::string keyMinHeight("min_height");
 
                 for (auto layer : data->layers) {
+                    if (textureData && layer.name == "water")
+                    { 
+                        printf("Skipping layer: %s\n", layer.name.c_str());
+
+                        continue;
+                    }
+                    printf("Processing layer: %s\n", layer.name.c_str());
                     for (auto feature : layer.features) {
-                        if (textureData && layer.name != "buildings" && layer.name != "roads") { continue; }
                         auto itHeight = feature.props.numericProps.find(keyHeight);
                         auto itMinHeight = feature.props.numericProps.find(keyMinHeight);
                         float scale = tile.invScale * exportParams.buildingsExtrusionScale;
@@ -954,8 +960,9 @@ int vectiler(Params exportParams) {
                             height = itHeight->second * scale;
                         }
 
-                        if (textureData && layer.name != "roads" && height == 0.0) {
-                            continue;
+                        if (layer.name != "water") {
+                            // TODO: Read from export parameters.
+                            height += 10.0 * tile.invScale;
                         }
 
                         if (itMinHeight != feature.props.numericProps.end()) {
